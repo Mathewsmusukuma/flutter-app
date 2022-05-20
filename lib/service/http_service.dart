@@ -15,13 +15,14 @@ class HttpService {
       "username": email,
       "password": password,
     });
-    if (response.statusCode == 202) {
+
+    if (response.statusCode == 200) {
       var json = jsonDecode(response.body);
-      if (json['status'] == 'success') {
+
+      if (json['token'] != "") {
         SharedPreferences prefs = await SharedPreferences.getInstance();
-        prefs.setString("_token", "token");
-        await EasyLoading.showSuccess(
-            json['message']);
+        prefs.setString("_token", json['token']);
+        await EasyLoading.showSuccess("Logged in successfully!");
         await Navigator.of(context).pushReplacement(
             MaterialPageRoute(builder: (context) => const DashboardScreen()));
       } else {
