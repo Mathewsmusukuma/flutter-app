@@ -23,7 +23,7 @@ class HttpService {
       if (json[0] == 'success') {
         await EasyLoading.showSuccess(json[0]);
         await Navigator.push(
-            context, MaterialPageRoute(builder: (context) => const Dashboard()));
+            context, MaterialPageRoute(builder: (context) => const DashboardPage()));
       } else {
         EasyLoading.showError(json[0]);
       }
