@@ -1,7 +1,5 @@
 # flutter_app
 
-Coding challenge project
-
 ## Getting Started
 
 This project is a starting point for a Flutter application.
