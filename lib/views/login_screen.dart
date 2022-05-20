@@ -3,14 +3,14 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 import '../service/http_service.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({Key? key}) : super(key: key);
 
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _LoginScreenState createState() => _LoginScreenState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginScreenState extends State<LoginScreen> {
   late String username;
   late String password;
 
@@ -19,23 +19,46 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
         appBar: AppBar(
             backgroundColor: Colors.green,
-            title: const Text('Login Page')),
+            title: const Text('Login')),
         body: Container(
           margin: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
           child: Column(
             children: [
-              TextField(
+              TextFormField(
+                validator: (text) {
+                  if (text == null || text.isEmpty) {
+                    return 'Can\'t be empty';
+                  }
+                  if (text.length < 2) {
+                    return 'Too short';
+                  }
+                  return null;
+                },
                 obscureText: false,
-                decoration: const InputDecoration(hintText: 'Username'),
+                decoration: const InputDecoration(
+                  labelText: 'Enter your username',
+                ),
                 onChanged: (value) {
                   setState(() {
                     username = value;
                   });
                 },
+
               ),
-              TextField(
-                obscureText: true,
-                decoration: const InputDecoration(hintText: 'Password'),
+              TextFormField(
+                validator: (text) {
+                  if (text == null || text.isEmpty) {
+                    return 'Can\'t be empty';
+                  }
+                  if (text.length < 2) {
+                    return 'Too short';
+                  }
+                  return null;
+                },
+                obscureText: false,
+                decoration: const InputDecoration(
+                  labelText: 'Enter your password',
+                ),
                 onChanged: (value) {
                   setState(() {
                     password = value;
@@ -44,7 +67,6 @@ class _LoginPageState extends State<LoginPage> {
               ),
               InkWell(
                   onTap: () async {
-
                     await HttpService.login(username, password, context);
                   },
                   child: Container(
