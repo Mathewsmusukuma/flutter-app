@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../views/dashboard_screen.dart';
 
 class HttpService {
@@ -17,6 +18,8 @@ class HttpService {
     if (response.statusCode == 202) {
       var json = jsonDecode(response.body);
       if (json['status'] == 'success') {
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setString("_token", "token");
         await EasyLoading.showSuccess(
             json['message']);
         await Navigator.of(context).pushReplacement(
