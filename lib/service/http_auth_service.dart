@@ -8,20 +8,22 @@ import '../views/dashboard_screen.dart';
 class HttpService {
   static final _client = http.Client();
 
-  static final _loginUrl = Uri.parse('http://10.0.2.2:8000/login/');
+  static final _loginUrl = Uri.parse('http://10.0.2.2:8000/api/token/');
 
   static login(email, password, context) async {
-    http.Response response = await _client.post(_loginUrl, body: {
+    http.Response response = await _client.post(_loginUrl,
+      body: {
       "username": email,
       "password": password,
-    });
+    },
+    );
 
     if (response.statusCode == 200) {
       var json = jsonDecode(response.body);
-
-      if (json['token'] != "") {
+      print(json['access']);
+      if (json['access'] != "") {
         SharedPreferences prefs = await SharedPreferences.getInstance();
-        prefs.setString("_token", json['token']);
+        prefs.setString("_token", json['access']);
         await EasyLoading.showSuccess("Logged in successfully!");
         await Navigator.of(context).pushReplacement(
             MaterialPageRoute(builder: (context) => const DashboardScreen()));

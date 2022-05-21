@@ -27,7 +27,7 @@ class _SplashScreenState extends State<SplashScreen> {
   _loadUserInfo() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     _token = (prefs.getString('_token') ?? "");
-
+    // prefs.clear();
     if (_token == "") {
       await Navigator.of(context).pushReplacement(
           MaterialPageRoute(builder: (context) => const LoginScreen()));
